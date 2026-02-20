@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <h1>Smart Event Dashboard</h1>
+    <div id="main">
+        <div id="part1">
+            <form action="">
+                <h2>Add New Event</h2>
+                <br>
+                <label for="">Event Title</label>
+                <br>
+                <input type="text" value="" placeholder="Enter event Title" id="eName">
+                <br>
+                <br>
+                <label for="">Event Date</label>
+                <br>
+                <input type="date" value="" id="eDate">
+                <br>
+                <br>
+                <label for="">Category</label>
+                <br>
+                <select name="" id="eOpt" >
+                    <option value="">conference
+                    <option>
+                    <option value="">a</option>
+                    <option value="">b</option>
+                    <option value="">c</option>
+                    <option value="">d</option>
+                </select>
+                <br>
+                <br>
+                <label for="">Description</label>
+                <br>
+                <textarea name="" id="eDis"></textarea>
+                <br>
+                <br>
+                <input type="submit" style="background-color: aquamarine;">
+            </form>
+        </div>
+
+        <div id="part2">
+            <h2>My Event</h2>
+            <table border="1px">
+                <thead>
+                    <tr>
+                        <th>Clear All Event</th>
+                        <div>
+                            <th>Add Sample Event</th>
+                        </div>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr>
+                        <td></td>
+                        <td>
+                             <div>
+                                
+
+                            </div>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+        <div id="part3">
+            <h2>DOM Manipulation Demo</h2>
+            <br>
+            <div>
+                <label for="">You Pressed</label>
+                <input type="text">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    let eventArr = JSON.parse(localStorage.getItem("event")) || [];
+
+
+    document.querySelector("form").addEventListener("submit", getEvent);
+
+    displayTable(eventArr)
+
+    function getEvent(e) {
+        e.preventDefault();
+        const evName = document.querySelector("#eName").value;
+        const evData = document.querySelector("#eDate").value;
+        const evCat = document.querySelector("#eOpt").value;
+        const evDis = document.querySelector("#eDis").value;
+
+        let eventObj = {
+            evName,
+            evData,
+            evCat,
+            evDis,
+        }
+
+        eventArr.push(eventObj);
+
+        localStorage.setItem("event", JSON.stringify(eventArr));
+        console.log(eventArr);
+
+        displayTable(eventArr);
+
+    }
+
+
+
+    // <tr>
+    //     <div>
+    //         <td>
+    //       
+    //         </td>
+    //     </div>
+    // </tr>
+
+    function displayTable(eve) {
+        document.querySelector("tbody").innerText = "";
+        eve.forEach((a) => {
+            let row = document.createElement("tr");
+            let td = document.createElement("td");
+
+
+            let td1 = document.createElement("td");
+            td1.innerText = a.evName
+
+            let td2 = document.createElement("td");
+            td2.innerText = a.evData
+
+            let td3 = document.createElement("td");
+            td3.innerText = a.evCat
+
+            let td4 = document.createElement("td");
+            td4.innerText = a.evDis
+
+            let d1 = document.createElement("div");
+            d1.style.border ="1px solid black"
+            d1.style.height = "60px"
+            d1.append(td1, td2, td3, td4)
+            row.append(td,d1)
+
+            document.querySelector("tbody").append(row)
+
+
+        })
+    }
+
+    document.addEventListener("keydown", function (e) {
+    demoContent.textContent = "You pressed a key!"+ e.key;
+    demoContent.style.backgroundColor = "lightblue";
+});
+
+
+
+</script>
